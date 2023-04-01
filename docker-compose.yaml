@@ -1,0 +1,28 @@
+services:
+  pgdatabase:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=chicago_crimes
+    volumes:
+      - "./chicago_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+    networks:
+      - chicago_proj_net
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    volumes:
+      - "./pgadmindata:/var/lib/pgadmin"
+    ports:
+      - "8080:80"
+    networks:
+      - chicago_proj_net
+
+networks:
+  chicago_proj_net:
+    name: chicago_proj_net
